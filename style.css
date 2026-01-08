@@ -1,0 +1,418 @@
+/* =========================
+   Container & Panel
+   ========================= */
+
+   .yt-timestamper-container {
+    margin-bottom: 16px;
+  }
+  
+  .yt-timestamper-panel {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 12px;
+    color: #f1f1f1;
+    background-color: #202124;
+    border-radius: 8px;
+    border: 1px solid #3c4043;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  
+  /* =========================
+     Header
+     ========================= */
+  
+  .yt-timestamper-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  
+  .yt-timestamper-title {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  
+  .yt-timestamper-header-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  /* Toggle button */
+  .yt-timestamper-toggle-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #e8eaed;
+    font-size: 13px;
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+  
+  .yt-timestamper-toggle-btn:hover {
+    background-color: #3c4043;
+  }
+  
+  /* Gear (settings) button */
+  .yt-timestamper-gear-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #e8eaed;
+    font-size: 14px;
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+  
+  .yt-timestamper-gear-btn:hover {
+    background-color: #3c4043;
+  }
+  
+  /* =========================
+     Body
+     ========================= */
+  
+  .yt-timestamper-body {
+    margin-top: 4px;
+  }
+  
+  /* =========================
+     Input row
+     ========================= */
+  
+  .yt-timestamper-input-row {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+  
+  .yt-timestamper-input {
+    flex: 1;
+    padding: 4px 6px;
+    border-radius: 4px;
+    border: 1px solid #5f6368;
+    background-color: #171717;
+    color: #e8eaed;
+    font-size: 12px;
+  }
+  
+  .yt-timestamper-input::placeholder {
+    color: #9aa0a6;
+  }
+  
+  .yt-timestamper-input:focus {
+    outline: none;
+    border-color: #8ab4f8;
+  }
+  
+  .yt-timestamper-add-btn {
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    background-color: #3ea6ff;
+    color: #000;
+    white-space: nowrap;
+  }
+  
+  .yt-timestamper-add-btn:hover {
+    background-color: #65b9ff;
+  }
+  
+  /* =========================
+     List
+     ========================= */
+  
+  .yt-timestamper-list {
+    max-height: 260px;
+    overflow-y: auto;
+    padding: 4px 2px;
+    border-radius: 4px;
+    background-color: #171717;
+    border: 1px solid #3c4043;
+  }
+  
+  .yt-timestamper-list-empty {
+    padding: 6px 4px;
+    font-size: 11px;
+    color: #9aa0a6;
+  }
+  
+  /* =========================
+     List item
+     ========================= */
+  
+  .yt-timestamper-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 4px;
+    border-radius: 4px;
+    gap: 4px;
+    cursor: grab; /* Sortable handle */
+  }
+  
+  .yt-timestamper-item:active {
+    cursor: grabbing;
+  }
+  
+  /* Hover highlight */
+  .yt-timestamper-item:hover {
+    background-color: rgba(138, 180, 248, 0.18);
+  }
+  
+  .yt-timestamper-item-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .yt-timestamper-item-right {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+  
+  /* =========================
+     Time button
+     ========================= */
+  
+  .yt-timestamper-time-btn {
+    border: none;
+    background: #303134;
+    color: #e8eaed;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  
+  .yt-timestamper-time-btn:hover {
+    background-color: #5f6368;
+  }
+  
+  /* =========================
+     Label & inline edit
+     ========================= */
+  
+  .yt-timestamper-label {
+    font-size: 12px;
+    color: #e8eaed;
+    word-break: break-all;
+  }
+  
+  /* Row while editing */
+  .yt-timestamper-item-editing {
+    background-color: rgba(138, 180, 248, 0.25);
+  }
+  
+  /* Inline edit input */
+  .yt-timestamper-label-input {
+    flex: 1;
+    min-width: 0;
+    padding: 2px 4px;
+    border-radius: 4px;
+    border: 1px solid #5f6368;
+    background-color: #202124;
+    color: #e8eaed;
+    font-size: 12px;
+  }
+  
+  /* =========================
+     Edit / Delete / Loop buttons
+     ========================= */
+  
+  .yt-timestamper-icon-btn {
+    border: none;
+    background: transparent;
+    color: #e8eaed;
+    cursor: pointer;
+    font-size: 11px;
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+  
+  .yt-timestamper-icon-btn:hover {
+    background-color: #3c4043;
+  }
+  
+  /* Loop button (base) */
+  .yt-timestamper-loop-btn {
+    color: #a5d6a7;
+  }
+  
+  /* Loop start (A) selected but not yet looping */
+  .yt-timestamper-loop-pending {
+    background-color: rgba(52, 168, 83, 0.18);
+    color: #c8e6c9;
+  }
+  
+  /* Loop active (start point) */
+  .yt-timestamper-loop-active {
+    background-color: rgba(52, 168, 83, 0.25);
+    color: #e8f5e9;
+  }
+  
+  /* Loop end (B) visual accent */
+  .yt-timestamper-loop-end {
+    color: #80cbc4;
+  }
+  
+  /* Loop button hover */
+  .yt-timestamper-loop-btn:hover {
+    background-color: rgba(52, 168, 83, 0.25);
+  }
+  
+  /* Two-step delete: confirm state */
+  .yt-timestamper-icon-btn.confirm {
+    background-color: #b3261e;
+    color: #fff;
+  }
+  
+  .yt-timestamper-icon-btn.confirm:hover {
+    background-color: #d32f2f;
+  }
+  
+  /* =========================
+     Footer & inline toast
+     ========================= */
+  
+  .yt-timestamper-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 6px;
+  }
+  
+  .yt-timestamper-copy-btn {
+    padding: 4px 12px;
+    font-size: 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    background-color: #34a853;
+    color: #fff;
+  }
+  
+  .yt-timestamper-copy-btn:hover {
+    background-color: #3fb45f;
+  }
+  
+  /* Inline toast (under Copy button) */
+  .yt-timestamper-inline-toast {
+    margin-top: 4px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    display: none;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  /* success */
+  .yt-timestamper-inline-toast.success {
+    background-color: rgba(52, 168, 83, 0.16);
+    color: #a5d6a7;
+  }
+  
+  /* error */
+  .yt-timestamper-inline-toast.error {
+    background-color: rgba(217, 48, 37, 0.18);
+    color: #f28b82;
+  }
+  
+  /* =========================
+     Settings modal
+     ========================= */
+  
+  .yt-timestamper-settings-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9998;
+  }
+  
+  .yt-timestamper-settings-modal {
+    background-color: #202124;
+    border-radius: 8px;
+    border: 1px solid #3c4043;
+    min-width: 260px;
+    max-width: 320px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  }
+  
+  .yt-timestamper-settings-header {
+    margin-bottom: 8px;
+  }
+  
+  .yt-timestamper-settings-title {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  
+  .yt-timestamper-settings-body {
+    font-size: 12px;
+    color: #e8eaed;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .yt-timestamper-settings-section {
+    padding: 6px 0;
+  }
+  
+  .yt-timestamper-settings-section-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  
+  .yt-timestamper-radio-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 2px;
+  }
+  
+  .yt-timestamper-settings-footer {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+  
+  .yt-timestamper-settings-btn {
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .yt-timestamper-settings-btn.primary {
+    background-color: #3ea6ff;
+    color: #000;
+  }
+  
+  .yt-timestamper-settings-btn.primary:hover {
+    background-color: #65b9ff;
+  }
+  
+  .yt-timestamper-settings-btn.secondary {
+    background-color: #3c4043;
+    color: #e8eaed;
+  }
+  
+  .yt-timestamper-settings-btn.secondary:hover {
+    background-color: #5f6368;
+  }
+  
