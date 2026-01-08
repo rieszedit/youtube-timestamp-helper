@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="YouTubeの動画にタイムスタンプを付けて、あとから簡単にジャンプできるChrome拡張『YouTube Timestamp Helper』の紹介ページです。"
+    content="YouTubeの動画にタイムスタンプを付けて、あとから簡単にジャンプ・ループ再生できるChrome拡張『YouTube Timestamp Helper』の紹介ページです。"
   />
   <style>
     :root {
@@ -86,7 +86,7 @@
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
       gap: 32px;
       align-items: center;
       margin-bottom: 40px;
@@ -176,129 +176,37 @@
       color: var(--text-muted);
     }
 
+    /* ▼ ここからスクリーンショット表示用に差し替え ▼ */
+
     .hero-screenshot {
       border-radius: 18px;
-      padding: 1px;
+      padding: 8px;
       background: radial-gradient(circle at top, #38bdf8, transparent 60%);
       box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
     }
 
     .hero-screenshot-inner {
-      border-radius: 17px;
+      border-radius: 14px;
       background: #020617;
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      padding: 14px 16px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      padding: 8px;
     }
 
-    .yt-bar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
+    .hero-screenshot-inner img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
     }
 
-    .yt-thumb {
-      width: 72px;
-      height: 40px;
-      border-radius: 6px;
-      background: linear-gradient(135deg, #ef4444, #fb923c);
-    }
-
-    .yt-text {
-      flex: 1;
-    }
-
-    .yt-title {
-      height: 12px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #e5e7eb 0, #4b5563 40%, #e5e7eb 100%);
-      background-size: 200% 100%;
-      animation: shimmer 1.2s linear infinite;
-      margin-bottom: 6px;
-    }
-
-    .yt-meta {
-      width: 60%;
-      height: 8px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #9ca3af 0, #4b5563 40%, #9ca3af 100%);
-      background-size: 200% 100%;
-      animation: shimmer 1.4s linear infinite;
-    }
-
-    .timestamps-card {
-      border-radius: 12px;
-      background: radial-gradient(circle at top left, #0f172a, #020617);
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      padding: 10px 12px;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .timestamps-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-
-    .pill {
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-    }
-
-    .timestamps-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .timestamps-list li {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 4px 0;
-      border-bottom: 1px dashed rgba(30, 64, 175, 0.5);
-    }
-
-    .timestamps-list li:last-child {
-      border-bottom: none;
-    }
-
-    .timestamp-time {
-      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas,
-        "Liberation Mono", "Courier New", monospace;
-      font-size: 11px;
-      padding: 2px 6px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(56, 189, 248, 0.5);
-      color: #7dd3fc;
-    }
-
-    .timestamp-label {
-      flex: 1;
-      margin-left: 8px;
-      font-size: 12px;
-      color: #e5e7eb;
-    }
-
-    .timestamp-shortcut {
+    .screenshot-caption {
+      margin-top: 6px;
       font-size: 11px;
       color: var(--text-muted);
+      text-align: right;
     }
 
-    @keyframes shimmer {
-      0% {
-        background-position: -120% 0;
-      }
-      100% {
-        background-position: 120% 0;
-      }
-    }
+    /* ▲ 差し替えここまで ▲ */
 
     .section {
       margin-bottom: 40px;
@@ -394,7 +302,7 @@
       </div>
       <div class="header-links">
         <!-- FIXME: URLをあとで実際のものに差し替えてください -->
-        <a href="https://chromewebstore.google.com/detail/pmhfpipjahjiaakifmnbbbkdoiecofmc?utm_source=item-share-cb" target="_blank" rel="noreferrer">Chrome拡張</a>
+        <a href="https://chrome.google.com/webstore" target="_blank" rel="noreferrer">Chrome拡張</a>
         <a href="https://github.com/rieszedit/youtube-timestamp-helper" target="_blank" rel="noreferrer">GitHub</a>
       </div>
     </header>
@@ -404,18 +312,18 @@
       <section class="hero">
         <div>
           <div class="hero-title">
-            YouTubeの「ここあとで見返したい」を、<br />
-            一瞬でタイムスタンプにするChrome拡張
+            YouTubeの気になる場面に、<br />
+            名前付きのタイムスタンプを残せるChrome拡張
           </div>
           <p class="hero-subtitle">
-            タイムスタンプをメモ帳に打ち込むのは、もう卒業。<br />
-            再生中の動画にキーボード一発でタイムスタンプを追加して、あとから一瞬でジャンプできます。
+            「このAメロだけ何度も聴きたい」「サビだけループしたい」──<br />
+            そんなときに、動画の中に自分専用のしおりを挟むようにタイムスタンプを追加できます。
           </p>
 
           <div class="hero-badges">
             <span class="badge accent">YouTube専用</span>
-            <span class="badge">キーボードショートカット対応</span>
-            <span class="badge">ローカル保存</span>
+            <span class="badge">タイムスタンプにラベルを付与</span>
+            <span class="badge">ループ再生に対応</span>
           </div>
 
           <div class="hero-actions">
@@ -439,60 +347,112 @@
             </a>
           </div>
           <div class="hero-note">
-            ※ 現在はベータ版です。仕様は予告なく変更されることがあります。
+            ※ 現在はベータ版です。今後のアップデートでUIや仕様が変更される可能性があります。
           </div>
         </div>
 
-        <div class="hero-screenshot" aria-hidden="true">
+        <!-- ▼ 実際のUIスクリーンショットを表示 ▼ -->
+        <div class="hero-screenshot">
           <div class="hero-screenshot-inner">
-            <div class="yt-bar">
-              <div class="yt-thumb"></div>
-              <div class="yt-text">
-                <div class="yt-title"></div>
-                <div class="yt-meta"></div>
-              </div>
-            </div>
-            <div class="timestamps-card">
-              <div class="timestamps-header">
-                <span>この動画のタイムスタンプ</span>
-                <span class="pill">⌘ / Ctrl + Shift + T で追加</span>
-              </div>
-              <ul class="timestamps-list">
-                <li>
-                  <span class="timestamp-time">00:42</span>
-                  <span class="timestamp-label">イントロ / 動画の概要</span>
-                  <span class="timestamp-shortcut">1 キーでジャンプ</span>
-                </li>
-                <li>
-                  <span class="timestamp-time">05:13</span>
-                  <span class="timestamp-label">本編スタート</span>
-                  <span class="timestamp-shortcut">2 キーでジャンプ</span>
-                </li>
-                <li>
-                  <span class="timestamp-time">12:07</span>
-                  <span class="timestamp-label">重要ポイントのまとめ</span>
-                  <span class="timestamp-shortcut">3 キーでジャンプ</span>
-                </li>
-                <li>
-                  <span class="timestamp-time">18:45</span>
-                  <span class="timestamp-label">Q&A セクション</span>
-                  <span class="timestamp-shortcut">4 キーでジャンプ</span>
-                </li>
-              </ul>
+            <img src="Loop_00000.png" alt="YouTube Timestamp Helper のUIスクリーンショット" />
+            <div class="screenshot-caption">
+              実際の拡張機能UI。タイムスタンプごとにラベルとループ設定ができます。
             </div>
           </div>
         </div>
+        <!-- ▲ ここまで ▼ -->
       </section>
 
       <!-- Features -->
       <section class="section">
         <h2 class="section-title">主な機能</h2>
         <p class="section-subtitle">
-          YouTubeを見ながら「ここ大事」を残しておくための、最低限だけど気の利いた機能を詰め込んでいます。
+          音楽・講義・配信など、何度も見返したい場面を効率よく管理するための機能をシンプルにまとめています。
         </p>
 
         <div class="features">
           <div class="feature-card">
-            <div class="feature-title">ワンショットでタイムスタンプ追加</div>
+            <div class="feature-title">タイムスタンプをワンクリックで追加</div>
             <div class="feature-body">
-              ショートカットキーを押すだけで、再生中の位置にタイムスタ
+              YouTubeの動画プレイヤーを開いた状態で、拡張のUIから現在の再生位置にタイムスタンプを追加できます。<br />
+              「0:25 / 1A」のように、ラベルを付けて管理可能です。
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-title">ラベルでわかりやすく整理</div>
+            <div class="feature-body">
+              「Intro」「Aメロ」「サビ」「ソロ」など、任意のラベルを付けておくことで、あとから見返すときに迷いません。<br />
+              テキストはいつでも編集できます。
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-title">ループ再生で集中して聴き込める</div>
+            <div class="feature-body">
+              タイムスタンプ単位でループ再生のオン・オフを切り替えられます。<br />
+              フレーズのコピー練習や耳コピ、語学学習などに便利です。
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-title">タイムスタンプのコピー機能</div>
+            <div class="feature-body">
+              登録したタイムスタンプを、まとめてテキストとしてコピーできます。<br />
+              メモアプリやYouTubeの概要欄、チャット欄などへの共有に使えます。
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How to use -->
+      <section class="section">
+        <h2 class="section-title">使い方</h2>
+        <p class="section-subtitle">
+          インストール後は、YouTubeを開いて拡張アイコンからパネルを表示するだけ。複雑な設定は不要です。
+        </p>
+
+        <div class="features">
+          <div class="feature-card">
+            <div class="feature-title">1. Chromeに拡張機能を追加</div>
+            <div class="feature-body">
+              Chrome Web Storeの「Chromeに追加」ボタンからインストールします。<br />
+              ピン留めしておくと、いつでもワンクリックで開けます。
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-title">2. 見返したい位置でタイムスタンプを追加</div>
+            <div class="feature-body">
+              YouTubeの動画を再生しながら、拡張のパネルでラベルを入力して「Add」を押すと、その瞬間にタイムスタンプが追加されます。
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-title">3. ループや削除でリストを整理</div>
+            <div class="feature-body">
+              各タイムスタンプの「Loop」ボタンでループ再生を切り替えたり、不要になったものは削除したりして、リストを整理できます。
+            </div>
+          </div>
+        </div>
+
+        <div class="meta">
+          <span>対応ブラウザ: Google Chrome（Chromium系ブラウザは一部動作する場合があります）</span>
+          <span>対応サイト: youtube.com</span>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div style="margin-bottom: 4px">
+        &copy; <span id="year"></span> YouTube Timestamp Helper
+      </div>
+      <div>
+        この拡張は YouTube および Google とは公式な関係はありません。<br />
+        このページには、MITライセンスで公開されている
+        <a href="https://github.com/SortableJS/Sortable" target="_blank" rel="noreferrer">SortableJS</a>
+        を利用しています。
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
