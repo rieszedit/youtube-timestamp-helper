@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>YouTube Timestamp Helper - Chrome拡張</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="YouTubeの動画にタイムスタンプを付けて、あとから簡単にジャンプできるChrome拡張『YouTube Timestamp Helper』の紹介ページです。"
+  />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-alt: #020617;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.1);
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border: #1f2933;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 60%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 16px 64px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #22d3ee, #4f46e5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: white;
+      font-size: 18px;
+    }
+
+    .logo-title {
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .header-links a {
+      margin-left: 16px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 32px;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .hero-title {
+      font-size: clamp(28px, 4vw, 36px);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .badge {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    .badge.accent {
+      border-color: rgba(56, 189, 248, 0.6);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease-out;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0ea5e9, #6366f1);
+      color: white;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.7);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.8);
+      text-decoration: none;
+    }
+
+    .btn-ghost {
+      background: rgba(15, 23, 42, 0.8);
+      color: var(--text-muted);
+      border-color: var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(148, 163, 184, 0.8);
+      text-decoration: none;
+    }
+
+    .hero-note {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .hero-screenshot {
+      border-radius: 18px;
+      padding: 1px;
+      background: radial-gradient(circle at top, #38bdf8, transparent 60%);
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+    }
+
+    .hero-screenshot-inner {
+      border-radius: 17px;
+      background: #020617;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      padding: 14px 16px;
+    }
+
+    .yt-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .yt-thumb {
+      width: 72px;
+      height: 40px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #ef4444, #fb923c);
+    }
+
+    .yt-text {
+      flex: 1;
+    }
+
+    .yt-title {
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #e5e7eb 0, #4b5563 40%, #e5e7eb 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s linear infinite;
+      margin-bottom: 6px;
+    }
+
+    .yt-meta {
+      width: 60%;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #9ca3af 0, #4b5563 40%, #9ca3af 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s linear infinite;
+    }
+
+    .timestamps-card {
+      border-radius: 12px;
+      background: radial-gradient(circle at top left, #0f172a, #020617);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      padding: 10px 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .timestamps-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .timestamps-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .timestamps-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 0;
+      border-bottom: 1px dashed rgba(30, 64, 175, 0.5);
+    }
+
+    .timestamps-list li:last-child {
+      border-bottom: none;
+    }
+
+    .timestamp-time {
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      color: #7dd3fc;
+    }
+
+    .timestamp-label {
+      flex: 1;
+      margin-left: 8px;
+      font-size: 12px;
+      color: #e5e7eb;
+    }
+
+    .timestamp-shortcut {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -120% 0;
+      }
+      100% {
+        background-position: 120% 0;
+      }
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border);
+      padding: 14px;
+      font-size: 13px;
+    }
+
+    .feature-title {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .feature-body {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(15, 23, 42, 0.8);
+      padding-top: 12px;
+      margin-top: 12px;
+    }
+
+    .meta span {
+      opacity: 0.8;
+    }
+
+    footer {
+      border-top: 1px solid rgba(15, 23, 42, 0.9);
+      padding-top: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .header-links {
+        display: flex;
+        gap: 12px;
+        margin-left: 0;
+      }
+
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-screenshot {
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="logo">
+        <div class="logo-mark">T</div>
+        <div class="logo-title">YouTube Timestamp Helper</div>
+      </div>
+      <div class="header-links">
+        <!-- FIXME: URLをあとで実際のものに差し替えてください -->
+        <a href="https://chromewebstore.google.com/detail/pmhfpipjahjiaakifmnbbbkdoiecofmc?utm_source=item-share-cb" target="_blank" rel="noreferrer">Chrome拡張</a>
+        <a href="https://github.com/rieszedit/youtube-timestamp-helper" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero">
+        <div>
+          <div class="hero-title">
+            YouTubeの「ここあとで見返したい」を、<br />
+            一瞬でタイムスタンプにするChrome拡張
+          </div>
+          <p class="hero-subtitle">
+            タイムスタンプをメモ帳に打ち込むのは、もう卒業。<br />
+            再生中の動画にキーボード一発でタイムスタンプを追加して、あとから一瞬でジャンプできます。
+          </p>
+
+          <div class="hero-badges">
+            <span class="badge accent">YouTube専用</span>
+            <span class="badge">キーボードショートカット対応</span>
+            <span class="badge">ローカル保存</span>
+          </div>
+
+          <div class="hero-actions">
+            <!-- FIXME: Web Store 公開後にURLを差し替え -->
+            <a
+              class="btn btn-primary"
+              href="https://chrome.google.com/webstore"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Chromeに追加する
+              <span style="font-size: 16px">→</span>
+            </a>
+            <a
+              class="btn btn-ghost"
+              href="https://github.com/rieszedit/youtube-timestamp-helper"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHubでコードを見る
+            </a>
+          </div>
+          <div class="hero-note">
+            ※ 現在はベータ版です。仕様は予告なく変更されることがあります。
+          </div>
+        </div>
+
+        <div class="hero-screenshot" aria-hidden="true">
+          <div class="hero-screenshot-inner">
+            <div class="yt-bar">
+              <div class="yt-thumb"></div>
+              <div class="yt-text">
+                <div class="yt-title"></div>
+                <div class="yt-meta"></div>
+              </div>
+            </div>
+            <div class="timestamps-card">
+              <div class="timestamps-header">
+                <span>この動画のタイムスタンプ</span>
+                <span class="pill">⌘ / Ctrl + Shift + T で追加</span>
+              </div>
+              <ul class="timestamps-list">
+                <li>
+                  <span class="timestamp-time">00:42</span>
+                  <span class="timestamp-label">イントロ / 動画の概要</span>
+                  <span class="timestamp-shortcut">1 キーでジャンプ</span>
+                </li>
+                <li>
+                  <span class="timestamp-time">05:13</span>
+                  <span class="timestamp-label">本編スタート</span>
+                  <span class="timestamp-shortcut">2 キーでジャンプ</span>
+                </li>
+                <li>
+                  <span class="timestamp-time">12:07</span>
+                  <span class="timestamp-label">重要ポイントのまとめ</span>
+                  <span class="timestamp-shortcut">3 キーでジャンプ</span>
+                </li>
+                <li>
+                  <span class="timestamp-time">18:45</span>
+                  <span class="timestamp-label">Q&A セクション</span>
+                  <span class="timestamp-shortcut">4 キーでジャンプ</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section class="section">
+        <h2 class="section-title">主な機能</h2>
+        <p class="section-subtitle">
+          YouTubeを見ながら「ここ大事」を残しておくための、最低限だけど気の利いた機能を詰め込んでいます。
+        </p>
+
+        <div class="features">
+          <div class="feature-card">
+            <div class="feature-title">ワンショットでタイムスタンプ追加</div>
+            <div class="feature-body">
+              ショートカットキーを押すだけで、再生中の位置にタイムスタ
