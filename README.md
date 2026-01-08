@@ -42,22 +42,6 @@ https://chromewebstore.google.com/detail/youtube-timestamp-helper/pmhfpipjahjiaa
   - plain text list
   - YouTube description/comment friendly format
   - time-linked URLs
-
----
-
-## 🛠 Development
-
-> ※ここはプロジェクトの構成に合わせて調整してください
-
-```bash
-# clone
-git clone https://github.com/<your-username>/youtube-timestamp-helper.git
-cd youtube-timestamp-helper
-
-# install dependencies
-npm install
-
-# development build / watch (例: Vite or webpack)
 npm run dev
 
 # production build
